@@ -71,7 +71,7 @@ def calcular_diferenca(imagem1, imagem2):
     return np.sum(np.abs(imagem1 - imagem2))
 
 # Caminho da imagem
-caminho_imagem = "AdobeStock_274903295.png"
+caminho_imagem = "imagem.png"
 
 # Leitura da imagem
 imagem_original = ler_imagem(caminho_imagem)
@@ -92,7 +92,7 @@ cores_unicas_original = contar_cores_unicas(imagem_original)
 print(f"Quantidade de cores únicas na imagem original: {cores_unicas_original}")
 
 # Definir valores de k para experimentação
-valores_k = [99]
+valores_k = [110,40,20,15,9,4,2]
 
 # Aplicar o algoritmo k-médias para diferentes valores de k
 for k in valores_k:
