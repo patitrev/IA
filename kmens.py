@@ -1,3 +1,4 @@
+import os
 import cv2
 import numpy as np
 import matplotlib.pyplot as plt
@@ -30,6 +31,20 @@ def extrair_caracteristicas(imagem):
     altura, largura, _ = imagem.shape
     return altura, largura
 
+
+# Função para obter o tamanho de um arquivo em KB
+def obter_tamanho_em_kb(caminho_arquivo):
+    tamanho_em_bytes = os.path.getsize(caminho_arquivo)
+    tamanho_em_kb = tamanho_em_bytes / 1024  # Converter bytes para kilobytes
+    return tamanho_em_kb
+
+
+# Função para calcular a quantidade de cores únicas em uma imagem
+def contar_cores_unicas(imagem):
+    cores_unicas = np.unique(imagem.reshape(-1, imagem.shape[2]), axis=0)
+    return len(cores_unicas)
+
+
 # Função para aplicar o algoritmo k-médias em uma imagem
 def aplicar_kmeans(imagem, k):
     altura, largura, _ = imagem.shape
@@ -49,6 +64,8 @@ def aplicar_kmeans(imagem, k):
 
     return imagem_segmentada, centroides
 
+
+
 # Função para calcular a diferença entre duas imagens
 def calcular_diferenca(imagem1, imagem2):
     return np.sum(np.abs(imagem1 - imagem2))
@@ -66,8 +83,16 @@ exibir_imagem(imagem_original, "Imagem Original")
 altura_original, largura_original = extrair_caracteristicas(imagem_original)
 print(f"Características da imagem original: Altura={altura_original}, Largura={largura_original}")
 
+# Obter o tamanho da imagem original em KB
+tamanho_original_kb = obter_tamanho_em_kb(caminho_imagem)
+print(f"Tamanho da imagem original: {tamanho_original_kb:.2f} KB")
+
+# Calcular a quantidade de cores únicas na imagem original
+cores_unicas_original = contar_cores_unicas(imagem_original)
+print(f"Quantidade de cores únicas na imagem original: {cores_unicas_original}")
+
 # Definir valores de k para experimentação
-valores_k = [2, 4, 8]
+valores_k = [99]
 
 # Aplicar o algoritmo k-médias para diferentes valores de k
 for k in valores_k:
@@ -80,8 +105,12 @@ for k in valores_k:
     altura_segmentada, largura_segmentada = extrair_caracteristicas(imagem_segmentada)
     print(f"Características da imagem segmentada (k={k}): Altura={altura_segmentada}, Largura={largura_segmentada}")
 
-    # Calcular a diferença entre a imagem original e a imagem segmentada
-    diferenca = calcular_diferenca(imagem_original, imagem_segmentada)
-    print(f"Diferença entre a imagem original e a imagem segmentada (k={k}): {diferenca}\n")
+     # Obter o tamanho da imagem segmentada em KB
+    tamanho_segmentada_kb = obter_tamanho_em_kb(caminho_imagem_segmentada)
+    print(f"Tamanho da imagem segmentada (k={k}): {tamanho_segmentada_kb:.2f} KB")
 
-# Nota: Essa é uma implementação básica e pode ser aprimorada conforme necessário para atender às suas necessidades específicas.
+     # Calcular a quantidade de cores únicas na imagem segmentada
+    cores_unicas_segmentada = contar_cores_unicas(imagem_segmentada)
+    print(f"Quantidade de cores únicas na imagem segmentada (k={k}): {cores_unicas_segmentada}")
+
+
